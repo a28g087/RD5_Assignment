@@ -1,0 +1,35 @@
+create database RD5 default character set utf8;
+
+use RD5;
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- 資料庫: `RD5`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 資料表格式： `students`
+--
+
+CREATE TABLE  IF NOT EXISTS `account` (
+  `accountid` varchar(20) NOT NULL,
+  `password` varchar(20)  NOT NULL,
+  `amount` int  NOT NULL,
+  PRIMARY KEY  (`accountid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `detail` (
+     `id` int NOT NULL PRIMARY key auto_increment,
+      `accountid` varchar(20) NOT NULL , 
+     `type` varchar(20) NOT NULL, 
+     `typeamount` int not NULL,
+     `date` datetime NOT NULL, 
+     `result` ENUM("OK","ERROR") NOT NULL, 
+     foreign key(accountid) references account(accountid) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
