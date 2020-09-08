@@ -19,6 +19,9 @@
             if($row>0){
                 header("Location: userView.php");
             }
+            else{
+                echo "<script>alert('登入失敗！');</script>";
+            }
         }
     }
 

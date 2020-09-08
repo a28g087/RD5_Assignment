@@ -37,14 +37,17 @@
     <script src="./jquery-1.9.1.min.js"></script>
 </head>
 <body>
-    <div name="test" id="test">XXX</div>
+    
     <form id="form1" name="form1" method="POST" action="userView.php">
         <table width="300" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
             <tr><td colspan="2" align="center" bgcolor="#CCCCCC">
                 <font color="#FFFF00"><?=$_SESSION["username"]?>的帳戶</font></td>
             </tr>
             <tr><td colspan="2" width="80" align="center" valign="baseline">帳戶餘額：
-                <?=$row["amount"]?>元<HR></td>
+                <label id="Money"><?=$row["amount"]?></label>元
+                <input type="button" name="hiddenMoney" id="hiddenMoney" value="隱藏金額">
+                <HR>
+                </td>
             </tr>
 
             <tr><td colspan="2" align="center" >
@@ -92,6 +95,27 @@
                 
             }
          
+        });
+        $('#hiddenMoney').click(function(){
+            var btnVal=$('#hiddenMoney').val();
+            //alert(btnVal);
+            if(btnVal=="隱藏金額"){
+                var str = $( "#Money" ).text();
+                var n = str.length;
+                var star="";
+                for(let i=0;i<n;i++){
+                    star+="*";
+                }
+                //alert(str+star);
+                $("#Money").text(star);
+                $('#hiddenMoney').val("顯示金額");
+            }
+            else if(btnVal=="顯示金額"){
+                var str = "<?=$row["amount"]?>";
+                //alert(str+star);
+                $("#Money").text(str);
+                $('#hiddenMoney').val("隱藏金額");
+            }
         });
     });
     </script>

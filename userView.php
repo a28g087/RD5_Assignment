@@ -17,7 +17,7 @@
         if(isset($_POST["inputamount"])){
             $check100=$_POST["inputamount"];
             if($check100%100!=0){
-                echo "ERROR!!";
+                echo "<script>alert('輸入錯誤！');</script>";
             }
             else{
                 require_once("connMysql.php");
@@ -69,7 +69,7 @@
         if(isset($_POST["inputamount"])){
             $check100=$_POST["inputamount"];
             if($check100%100!=0){
-                echo "ERROR!!";
+                echo "<script>alert('輸入錯誤！');</script>";
             }
             else{
                 require_once("connMysql.php");
@@ -88,6 +88,12 @@
                         $_SESSION["trans"]="成功";
                         header("Location: trans.php");
                     }
+                    else{
+                        echo "<script>alert('輸入錯誤！');</script>";
+                    }
+                }
+                else{
+                    echo "<script>alert('輸入錯誤！');</script>";
                 }
             }
         }
@@ -109,6 +115,12 @@
                     $_SESSION["trans"]="成功";
                     header("Location: trans.php");
                 }
+                else{
+                    echo "<script>alert('輸入錯誤！');</script>";
+                }
+            }
+            else{
+                echo "<script>alert('輸入錯誤！');</script>";
             }
             
         }
@@ -141,14 +153,29 @@
     <script src="./jquery-1.9.1.min.js"></script>
 </head>
 <body>
-    <div name="test" id="test"></div>
     <form id="form1" name="form1" method="POST" action="userView.php">
         <table width="300" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
             <tr><td colspan="2" align="center" bgcolor="#CCCCCC">
                 <font color="#FFFF00"><?=$_SESSION["username"]?>的帳戶</font></td>
             </tr>
             <tr><td colspan="2" width="80" align="center" valign="baseline">帳戶餘額：
-                <?=$row["amount"]?>元<HR></td>
+                <label id="Money"><?=$row["amount"]?></label>元
+                <?php //if(isset($_POST["hiddenMoney"])){?>
+                    <?php //if(strcmp($_POST["hiddenMoney"],"隱藏金額")==0){?>
+                        <!-- <input type="button" name="hiddenMoney" id="hiddenMoney" value="隱藏金額"/>
+                        <input type="hidden" name="hiddenMoney" id="hiddenMoney" value="隱藏金額"/> -->
+                    <?php //}elseif(strcmp($_POST["hiddenMoney"],"顯示金額")==0){?>
+                        <!-- <input type="button" name="hiddenMoney" id="hiddenMoney" value="顯示金額"/>
+                        <input type="hidden" name="hiddenMoney" id="hiddenMoney" value="顯示金額"/> -->
+                    <?php //}?>
+                    <!-- <input type="button" name="hiddenMoney" id="hiddenMoney" value="隱藏金額"/>
+                    <input type="hidden" name="hiddenMoney" id="hiddenMoney" value="隱藏金額"/> -->
+                <?php //}else{?>
+                    <input type="button" name="hiddenMoney" id="hiddenMoney" value="隱藏金額"/>
+                    <input type="hidden" name="hiddenMoney" id="hiddenMoney" value="隱藏金額"/>
+                <?php //}?>
+                <HR>
+                </td>
             </tr>
 
             <tr><td colspan="2" align="left" >
@@ -157,12 +184,12 @@
             <tr><?php
                     if(isset($_POST["deposits"]) || isset($_POST["withdraw"])){
                         if(isset($_POST["deposits"])){
-                            echo $_POST["deposits"];
+                            //$_SESSION["hiddenMoney"]=$_POST["hiddenMoney"];
                             $_SESSION["deposits"]=$_POST["deposits"];
                             $_SESSION["amount"]=$row["amount"];
                         }
                         elseif(isset($_POST["withdraw"])){
-                            echo $_POST["withdraw"];
+                            //echo $_POST["withdraw"];
                             $_SESSION["withdraw"]=$_POST["withdraw"];
                             $_SESSION["amount"]=$row["amount"];
                         }
@@ -217,25 +244,25 @@
         $('input[type=radio][name=amount]').click( function(){
             if(event.target.id=='onethousand'){
                 amount=$('#onethousand').attr('value');
-                $('#test').html(amount); 
+                //$('#test').html(amount); 
                 $('#inputamount').prop('disabled',true);
                 $('#hiddenamount').prop('value',amount);
             }
             else if(event.target.id=='twothousand'){
                 amount=$('#twothousand').attr('value');
-                $('#test').html(amount); 
+                //$('#test').html(amount); 
                 $('#inputamount').prop('disabled',true);
                 $('#hiddenamount').prop('value',amount);
             }
             else if(event.target.id=='fivethousand'){
                 amount=$('#fivethousand').attr('value');
-                $('#test').html(amount); 
+                //$('#test').html(amount); 
                 $('#inputamount').prop('disabled',true);
                 $('#hiddenamount').prop('value',amount);
             }
             else if(event.target.id=='tenthousand'){
                 amount=$('#tenthousand').attr('value');
-                $('#test').html(amount); 
+                //$('#test').html(amount); 
                 $('#inputamount').prop('disabled',true);
                 $('#hiddenamount').prop('value',amount);
             }
@@ -243,6 +270,52 @@
                 $('#inputamount').prop('disabled',false);
                 //$('#hiddenamount').prop('value',amount);
                 //$('#test').html(amount); 
+            }
+        });
+
+        // var btnVal=$('input[type=button][name=hiddenMoney]').val();
+        // //alert(btnVal);
+        // if(btnVal=="隱藏金額"){
+        //     var str = $("#Money").text();
+        //     var n = str.length;
+        //     var star="";
+        //     for(let i=0;i<n;i++){
+        //         star+="*";
+        //     }
+        //     //alert(str+star);
+        //     $("#Money").text(star);
+        //     //$('input[type=button][name=hiddenMoney]').val("顯示金額");
+        //     //$('input[type=hidden][name=hiddenMoney]').val("顯示金額");
+        // }
+        // else if(btnVal=="顯示金額"){
+        //     var str = "<=$row["amount"]?>";
+        //     //alert(str+star);
+        //     $("#Money").text(str);
+        //     //$('input[type=button][name=hiddenMoney]').val("隱藏金額");
+        //     //$('input[type=hidden][name=hiddenMoney]').val("隱藏金額");
+        // }
+
+        $('input[type=button][name=hiddenMoney]').click(function(){
+            var btnVal=$('input[type=button][name=hiddenMoney]').val();
+            //alert(btnVal);
+            if(btnVal=="隱藏金額"){
+                var str = $( "#Money" ).text();
+                var n = str.length;
+                var star="";
+                for(let i=0;i<n;i++){
+                    star+="*";
+                }
+                //alert(str+star);
+                $("#Money").text(star);
+                $('input[type=button][name=hiddenMoney]').val("顯示金額");
+                $('input[type=hidden][name=hiddenMoney]').val("顯示金額");
+            }
+            else if(btnVal=="顯示金額"){
+                var str = "<?=$row["amount"]?>";
+                //alert(str+star);
+                $("#Money").text(str);
+                $('input[type=button][name=hiddenMoney]').val("隱藏金額");
+                $('input[type=hidden][name=hiddenMoney]').val("隱藏金額");
             }
         });
 
